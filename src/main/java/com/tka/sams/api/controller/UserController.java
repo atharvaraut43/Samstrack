@@ -23,7 +23,7 @@ import com.tka.sams.api.service.UserService;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin("http://localhost:5173")  
 public class UserController {
 
 	@Autowired
@@ -33,28 +33,29 @@ public class UserController {
 	public User loginUser(@RequestBody LoginRequest request) {
 		
 		return service.loginUser(request);
-
 	}
 
 	@CrossOrigin(methods = RequestMethod.POST)
 	@PostMapping("/register-user")
 	public ResponseEntity<Integer> registerUser(@RequestBody User user) {
+		
 		User registerUser = service.registerUser(user);
+		System.out.println(registerUser);
 		if (registerUser != null) {
 			return new ResponseEntity<Integer>(1, HttpStatus.CREATED);
 		} else {
 			return new ResponseEntity<Integer>(3, HttpStatus.OK);
 		}
-
 	}
 
 	@GetMapping("/get-user-by-username/{username}")
 	public User getUserById(@PathVariable String username) {
+		System.out.println("hello");
 		return service.getUserByName(username);
 
 	}
 
-	@GetMapping("/get-all-user")
+	@GetMapping("/get-all-user") //localhost:8080/user/get-all-user
 	public List<User> getAllUser() {
 		return service.getAllUser();
 
